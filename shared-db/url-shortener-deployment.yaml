@@ -22,4 +22,12 @@ spec:
           env:
             - name: URL_SHORTENER_REDIS_ADDRESS
               value: "redis-urls-holder:6379"
+            - name: URL_SHORTENER_FAIL_PERCENT
+              value: "1"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+            initialDelaySeconds: 10
+            failureThreshold: 1
           
