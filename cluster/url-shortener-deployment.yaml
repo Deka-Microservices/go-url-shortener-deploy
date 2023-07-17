@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-url-shortener
+  labels:
+    app: url-shortener
+spec:
+  selector:
+    matchLabels:
+      app: url-shortener
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: url-shortener
+    spec:
+      containers:
+        - name: go-url-shortener
+          image: localhost:5000/go-url-shortener:0.3.1
+          ports:
+            - containerPort: 9000
+          envFrom:
+            - configMapRef:
+                name: url-shortener-config
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+            initialDelaySeconds: 10
+            failureThreshold: 1
+          

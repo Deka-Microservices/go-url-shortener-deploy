@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: url-shortener-config
+data:
+  URL_SHORTENER_FAIL_PERCENT: "0"
+  URL_SHORTENER_REDIS_ADDRESSES: "url-shortener-redis-cluster:6379"
+  URL_SHORTENER_REDIS_PASSWORD: "NotAPassword"

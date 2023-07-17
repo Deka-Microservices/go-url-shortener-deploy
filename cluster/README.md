@@ -1,0 +1,1 @@
+Assume that redis cluster deployed through helm
