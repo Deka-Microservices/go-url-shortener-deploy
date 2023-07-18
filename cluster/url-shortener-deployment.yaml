@@ -19,9 +19,23 @@ spec:
           image: localhost:5000/go-url-shortener:0.3.1
           ports:
             - containerPort: 9000
-          envFrom:
-            - configMapRef:
-                name: url-shortener-config
+          env:
+            - name: URL_SHORTENER_FAIL_PERCENT
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: fail_percent
+            - name: URL_SHORTENER_REDIS_ADDRESSES
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: redis_addresses
+            - name: URL_SHORTENER_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: url-shortener-redis-cluster-secret
+                  key: password
+
           livenessProbe:
             httpGet:
               path: /health
