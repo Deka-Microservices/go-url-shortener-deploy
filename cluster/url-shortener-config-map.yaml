@@ -5,3 +5,5 @@ metadata:
 data:
   fail_percent: "0"
   redis_addresses: "url-shortener-redis-cluster:6379"
+  tls_cert: "/etc/certs/tls.crt"
+  tls_key: "/etc/certs/tls.key"

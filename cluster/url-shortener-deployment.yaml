@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: go-url-shortener
-          image: localhost:5000/go-url-shortener:0.3.1
+          image: localhost:5000/go-url-shortener:0.4.1
           ports:
             - containerPort: 9000
           env:
@@ -35,6 +35,21 @@ spec:
                 secretKeyRef:
                   name: url-shortener-redis-cluster-secret
                   key: password
+            - name: URL_SHORTENER_TLS_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: tls_cert
+            - name: URL_SHORTENER_TLS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: tls_key
+
+          volumeMounts:
+            - name: tls-certs
+              mountPath: "/etc/certs"
+              readOnly: true
 
           livenessProbe:
             httpGet:
@@ -42,4 +57,8 @@ spec:
               port: 9000
             initialDelaySeconds: 10
             failureThreshold: 1
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: tls-secret     
           
